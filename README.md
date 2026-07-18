@@ -1,15 +1,23 @@
 # SnoozeEscape
 
-SnoozeEscape is a playful, standalone browser game about an alarm clock that refuses to be stopped. Every attempt triggers a different evasive antic. After the eighth try, the clock gives up on you first.
+SnoozeEscape is a playful browser game about an alarm clock that refuses to be stopped. Every attempt triggers a different evasive antic; after the eighth try, the clock gives up on you first and goes back to sleep.
 
-The project uses only HTML, CSS, inline SVG, and vanilla JavaScript. It has no framework, build step, remote assets, analytics, or backend.
+The project is a self-contained static website built without frameworks, external images, remote fonts, analytics, a backend, or a production build step.
 
-**Release status:** `v1.0.0` is production-ready. The GitHub repository remains private until publication is explicitly approved.
+## Project status
+
+| Item | Status |
+| --- | --- |
+| Current version | `1.0.0` |
+| Release readiness | Production-ready |
+| Repository visibility | Private until publication is explicitly approved |
+| Deployment target | GitHub Pages from the repository root |
+| License | MIT |
 
 ## Features
 
 - Live 12-hour digital clock
-- Continuous animated ringing, clock shake, and bouncing bells
+- Continuous alarm animation with clock shake and bouncing bells
 - Web Audio API alarm with mute and volume controls
 - Nine randomized alarm behaviors:
   - jumps somewhere else
@@ -22,110 +30,163 @@ The project uses only HTML, CSS, inline SVG, and vanilla JavaScript. It has no f
   - falls from the desk and climbs back
   - covers itself with a blanket
 - Eight-attempt counter and final sleeping state
-- Reset button for instant rematches
+- Reset control for immediate rematches
 - Responsive desktop and mobile layouts
-- Native button interactions for mouse, keyboard, and touch
+- Mouse, keyboard, and touch support through native controls
 - Live status announcements for assistive technology
-- Visible focus states, semantic controls, and a skip link
+- Visible focus states, semantic markup, and a skip link
 - `prefers-reduced-motion` support
-- Self-contained artwork drawn with CSS and inline SVG
+- Original bedroom artwork drawn entirely with CSS and inline SVG
 
-## Run locally
+## Technology
 
-No installation or build is required. You can open `index.html` directly, although a local server more closely matches GitHub Pages behavior:
+- **Structure:** semantic HTML5
+- **Styling and animation:** CSS3, custom properties, responsive media queries, and keyframe animation
+- **Artwork:** inline SVG and CSS shapes
+- **Interaction:** vanilla JavaScript with a small alarm state machine
+- **Audio:** Web Audio API oscillators and gain envelopes
+- **Validation:** dependency-free Node.js verification script
+- **Local serving:** Python's built-in static HTTP server
+- **Hosting:** zero-build GitHub Pages deployment
+
+## Getting started
+
+### Prerequisites
+
+- A current version of Chrome, Edge, Firefox, or Safari
+- Python 3 for the documented local server command
+- Node.js 18 or newer for production validation
+- GitHub authentication if cloning while the repository is private
+
+### Clone the repository
+
+```bash
+git clone https://github.com/SUDARSHANCHAUDHARI/SnoozeEscape.git
+cd SnoozeEscape
+```
+
+There are no packages to install.
+
+### Run locally
 
 ```bash
 npm run dev
 ```
 
-Then visit [http://localhost:4173](http://localhost:4173).
+Open [http://localhost:4173](http://localhost:4173). You can also open `index.html` directly, although a local server more closely matches GitHub Pages behavior.
 
-The `dev` command uses Python's built-in static server. You can use any other static file server if Python 3 is unavailable.
-
-## Validate the project
-
-Run the dependency-free validation checks with Node.js 18 or newer:
+### Validate the project
 
 ```bash
 npm run check
 ```
 
-The check verifies JavaScript syntax, required files, local asset references, unique HTML IDs, accessible controls, reduced-motion support, Web Audio usage, and the complete set of alarm antics.
+The check verifies JavaScript syntax, required repository files, local asset references, unique HTML IDs, accessible controls, reduced-motion support, Web Audio usage, all nine alarm antics, author metadata, and the eight-attempt ending.
 
-## Controls
+## How to play
 
 1. Press **Start the alarm**. This user gesture gives the browser permission to start Web Audio.
 2. Press **Stop** and watch the clock evade you.
 3. Use **Sound on/off** or the **Volume** slider at any time.
-4. After the clock falls asleep—or whenever you want a rematch—press **Reset room**.
+4. Continue until the eighth attempt, when the clock falls asleep by itself.
+5. Press **Reset room** for a rematch.
 
-The first sound must follow a user action because modern browsers block autoplaying audio. If sound is unavailable, the visual game continues and reports the problem in the status area.
-
-## GitHub Pages deployment
-
-This repository is ready to publish from its root directory; no build action is needed.
-
-1. Push the project to a GitHub repository.
-2. Open **Settings → Pages** in that repository.
-3. Under **Build and deployment**, select **Deploy from a branch**.
-4. Choose the branch you pushed and the `/ (root)` folder, then save.
-
-All asset paths are relative, so the game works both at a user site and beneath a repository path such as `https://username.github.io/SnoozeEscape/`. The included `.nojekyll` file tells GitHub Pages to serve the static files directly.
-
-> GitHub Actions are intentionally not required. Pages can publish this project directly from a branch.
+Modern browsers block autoplaying audio, so sound cannot begin before the initial button press. If Web Audio is unavailable, the visual game remains playable and reports the problem in the status area.
 
 ## Project structure
 
 ```text
 SnoozeEscape/
-├── .editorconfig
-├── .gitignore
-├── .nojekyll
-├── AGENTS.md
-├── CHANGELOG.md
-├── LICENSE
-├── README.md
-├── SECURITY.md
-├── favicon.svg
-├── index.html
-├── package.json
-├── script.js
-├── styles.css
+├── .editorconfig        # Shared text-formatting rules
+├── .gitignore           # Local, secret, cache, and build exclusions
+├── .nojekyll            # Direct GitHub Pages static serving
+├── AGENTS.md            # Repository-specific agent guidance
+├── CHANGELOG.md         # Version history
+├── LICENSE              # MIT license
+├── README.md            # Project documentation
+├── SECURITY.md          # Vulnerability reporting policy
+├── favicon.svg          # Local SVG site icon
+├── index.html           # Semantic scene and inline SVG artwork
+├── package.json         # Metadata and local commands
+├── script.js            # Game state, movement, time, and audio
+├── styles.css           # Scene design, responsiveness, and animation
 └── scripts/
-    └── verify.mjs
+    └── verify.mjs       # Dependency-free production checks
 ```
 
-## How it works
+## Architecture
 
-The clock uses two animation layers. The outer `.clock-positioner` controls where it sits on the desk, while the inner `.alarm-clock` controls actions such as shaking, rolling, and falling. Keeping those transforms separate allows location changes and body motion to run together.
+The clock deliberately uses two animation layers. The outer `.clock-positioner` controls where it sits on the desk, while the inner `.alarm-clock` controls actions such as shaking, rolling, and falling. This separation lets position changes and body motion run together without competing for the same CSS transform.
 
-The alarm logic is a small state machine tracking whether the game has started, whether an antic is active, the attempt count, the last randomized antic, and the final sleeping state. Consecutive duplicates are excluded so the interaction stays varied. Web Audio oscillator bursts are created only while the alarm is active and are stopped when the tab is hidden or the clock falls asleep.
+The JavaScript state machine tracks whether the game has started, whether an antic is active, the attempt count, the last randomized antic, and the final sleeping state. Consecutive duplicate antics are excluded. Short Web Audio oscillator bursts are scheduled only while the alarm is active and stop when the tab is hidden or the clock falls asleep.
+
+## Accessibility and motion
+
+- Interactive actions use native buttons and a labeled range input.
+- Status changes are announced through an `aria-live` region.
+- Keyboard focus is moved to the Stop control after starting.
+- Focus indicators remain visible against the illustrated scene.
+- Touch targets use native click behavior and `touch-action: manipulation`.
+- Reduced-motion preferences disable nonessential movement while preserving game status updates.
 
 ## Browser support
 
-SnoozeEscape targets current versions of Chrome, Edge, Firefox, and Safari. It needs JavaScript enabled. Web Audio support is optional; when unavailable, the visual experience remains playable.
+SnoozeEscape targets current versions of Chrome, Edge, Firefox, and Safari with JavaScript enabled. Web Audio is optional; when unavailable, the visual game remains playable and reports the limitation in the status area.
+
+## Privacy and security
+
+SnoozeEscape runs entirely in the browser. It stores no data, requests no permissions beyond user-initiated audio, and sends no network requests at runtime. It has no third-party runtime dependencies, analytics, accounts, authentication, or backend services.
+
+Report security concerns using the private process documented in [SECURITY.md](SECURITY.md). Do not open a public issue for a vulnerability.
+
+## GitHub Pages deployment
+
+The repository is ready to publish directly from its root directory. No build artifact or GitHub Actions workflow is required.
+
+1. Run `npm run check`.
+2. Confirm the intended commit is on `main`.
+3. Make the repository public only after explicit publication approval.
+4. Open **Settings → Pages** in the repository.
+5. Under **Build and deployment**, select **Deploy from a branch**.
+6. Select `main` and `/ (root)`, then save.
+
+After publication, the expected site address is:
+
+```text
+https://sudarshanchaudhari.github.io/SnoozeEscape/
+```
+
+All application asset paths are relative, so repository-subpath hosting works without URL rewriting. The included `.nojekyll` file tells GitHub Pages to serve the files directly.
 
 ## Release checklist
 
 Before publishing a release:
 
 1. Run `npm run check`.
-2. Serve the repository root and confirm `index.html`, `styles.css`, and `script.js` return HTTP 200.
+2. Serve the repository root and confirm `index.html`, `styles.css`, `script.js`, and `favicon.svg` return HTTP 200 with the expected content types.
 3. Manually exercise eight Stop attempts with sound on and off.
 4. Check keyboard navigation, touch sizing, and reduced-motion behavior.
-5. Review the Git diff and confirm no environment files, keys, or local configuration are tracked.
-6. Make the GitHub repository public only after explicit publication approval, then enable Pages from the intended branch and `/ (root)` directory.
-
-No GitHub Actions workflow is required for this zero-build project. Direct branch deployment keeps the release path small and auditable.
+5. Review the Git diff and confirm no environment files, keys, local configuration, or generated caches are tracked.
+6. Review [CHANGELOG.md](CHANGELOG.md) and update the version when behavior changes.
 
 ## Customization
 
 The main colors and font stacks are CSS custom properties at the top of `styles.css`. Adjust `MAX_ATTEMPTS` in `script.js` only if you also update the counter copy and the eight attempt pips in `index.html`.
 
-## Privacy
+## Author
 
-SnoozeEscape runs entirely in the browser. It stores no data and sends no network requests.
+### Sudarshan Chaudhari
+
+Solo indie developer at **SudarshanTechLabs**, based in Bangkok, Thailand.
+
+- GitHub: [@SUDARSHANCHAUDHARI](https://github.com/SUDARSHANCHAUDHARI)
+- Development contact: [sunny.sudarshan@gmail.com](mailto:sunny.sudarshan@gmail.com)
+- Business, legal, and store contact: [sudarshantechlabs@gmail.com](mailto:sudarshantechlabs@gmail.com)
+
+SnoozeEscape is designed, developed, and maintained by Sudarshan Chaudhari.
 
 ## License
+
+Copyright © 2026 Sudarshan Chaudhari.
 
 Released under the [MIT License](LICENSE).

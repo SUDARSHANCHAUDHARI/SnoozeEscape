@@ -18,6 +18,7 @@ const requiredFiles = [
 
 const html = read("index.html");
 const css = read("styles.css");
+const readme = read("README.md");
 const script = read("script.js");
 
 const checks = [
@@ -36,6 +37,12 @@ const checks = [
   ["Web Audio API is used", script.includes("AudioContext") && script.includes("createOscillator")],
   ["all nine alarm antics are present", countAntics(script) === 9],
   ["no dynamic code evaluation is used", !/\beval\s*\(|\bnew\s+Function\s*\(/.test(script)],
+  [
+    "README contains verified author metadata",
+    ["Sudarshan Chaudhari", "SudarshanTechLabs", "SUDARSHANCHAUDHARI", "sunny.sudarshan@gmail.com"].every(
+      (value) => readme.includes(value),
+    ),
+  ],
 ];
 
 let failed = false;
