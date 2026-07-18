@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="SnoozeEscape is an interactive alarm clock that refuses to be stopped."
+    />
+    <meta name="application-name" content="SnoozeEscape" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#15234d" />
+    <meta property="og:title" content="SnoozeEscape — The alarm that fights back" />
+    <meta
+      property="og:description"
+      content="Try to stop an alarm clock with nine ridiculous escape plans."
+    />
+    <meta property="og:type" content="website" />
+    <title>SnoozeEscape — The alarm that fights back</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#stop-button">Skip to the alarm</a>
+
+    <main class="game" id="game">
+      <header class="game-header">
+        <div class="brand" aria-label="SnoozeEscape">
+          <span class="brand-snooze">Snooze</span><span class="brand-escape">Escape!</span>
+        </div>
+
+        <p class="tagline">One alarm. Eight bad decisions.</p>
+
+        <div class="sound-panel" aria-label="Sound controls">
+          <button class="icon-button" id="sound-toggle" type="button" aria-pressed="false">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+              <path class="speaker-shape" d="M4 9v6h4l5 4V5L8 9H4Z" />
+              <path class="sound-wave" d="M16 9c1.4 1.6 1.4 4.4 0 6M19 6c3.3 3.4 3.3 8.6 0 12" />
+              <path class="mute-mark" d="m16 9 5 6m0-6-5 6" />
+            </svg>
+            <span id="sound-label">Sound on</span>
+          </button>
+
+          <label class="volume-control" for="volume">
+            <span>Volume</span>
+            <input id="volume" type="range" min="0" max="100" value="58" />
+          </label>
+
+          <button class="reset-button" id="reset-button" type="button">Reset room</button>
+        </div>
+      </header>
+
+      <section class="attempt-panel" aria-label="Stop attempts">
+        <div>
+          <span class="panel-label">Escape attempts</span>
+          <strong><span id="attempt-count">0</span> / 8</strong>
+        </div>
+        <div class="attempt-pips" id="attempt-pips" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </section>
+
+      <section class="room" id="room" aria-label="A bedroom desk before sunrise">
+        <div class="wall-grain" aria-hidden="true"></div>
+
+        <svg class="window" viewBox="0 0 300 240" aria-label="A moonlit bedroom window" role="img">
+          <defs>
+            <linearGradient id="night-sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#071329" />
+              <stop offset="1" stop-color="#314a79" />
+            </linearGradient>
+            <linearGradient id="moon-glow">
+              <stop stop-color="#fff9c9" />
+              <stop offset="1" stop-color="#ffc857" />
+            </linearGradient>
+          </defs>
+          <rect class="window-frame" x="4" y="4" width="292" height="232" rx="4" />
+          <rect x="18" y="18" width="264" height="204" fill="url(#night-sky)" />
+          <circle cx="215" cy="62" r="28" fill="url(#moon-glow)" />
+          <circle cx="225" cy="52" r="28" fill="#0d1c3d" />
+          <g class="stars" fill="#ddebff">
+            <circle cx="48" cy="48" r="2" /><circle cx="108" cy="76" r="1.5" />
+            <circle cx="252" cy="112" r="2" /><circle cx="159" cy="39" r="1.5" />
+            <circle cx="77" cy="135" r="1.5" /><circle cx="184" cy="126" r="2" />
+          </g>
+          <path class="city" d="M18 169h30v-31h22v15h34v-52h32v41h25v-23h31v41h34v-63h27v41h19v84H18Z" />
+          <path class="window-bars" d="M150 18v204M18 120h264" />
+        </svg>
+
+        <div class="poster" aria-hidden="true">
+          <span>WAKE</span>
+          <span>UP!</span>
+          <i></i><i></i><i></i>
+        </div>
+
+        <div class="shelf" aria-hidden="true">
+          <div class="plant-pot"><span></span><span></span><span></span></div>
+          <div class="shelf-book book-a"></div>
+          <div class="shelf-book book-b"></div>
+          <div class="shelf-book book-c"></div>
+        </div>
+
+        <div class="lamp" aria-hidden="true">
+          <div class="lamp-glow"></div>
+          <div class="lamp-shade"></div>
+          <div class="lamp-neck"></div>
+          <div class="lamp-foot"></div>
+          <div class="lamp-pull"></div>
+        </div>
+
+        <div class="books" id="books" aria-hidden="true">
+          <div class="book book-top"><span>MORE SLEEP</span></div>
+          <div class="book book-middle"><span>EXCUSES / VOL. 8</span></div>
+          <div class="book book-bottom"><span>THE ART OF SNOOZE</span></div>
+        </div>
+
+        <div class="mug" aria-hidden="true">
+          <span class="steam steam-one"></span>
+          <span class="steam steam-two"></span>
+          <div class="mug-label">zzz</div>
+        </div>
+
+        <div class="pencil-cup" aria-hidden="true">
+          <i class="pencil pencil-one"></i>
+          <i class="pencil pencil-two"></i>
+          <i class="pencil pencil-three"></i>
+        </div>
+
+        <div class="sticky-note" aria-hidden="true">DON'T<br />SNOOZE</div>
+
+        <div class="clock-positioner" id="clock-positioner">
+          <article class="alarm-clock" id="alarm-clock" aria-label="A ringing red alarm clock">
+            <div class="clock-shadow" aria-hidden="true"></div>
+
+            <div class="bells" aria-hidden="true">
+              <div class="bell bell-left"><span></span></div>
+              <div class="bell-hammer"></div>
+              <div class="bell bell-right"><span></span></div>
+            </div>
+
+            <div class="clock-handle" aria-hidden="true"></div>
+
+            <div class="clock-body">
+              <div class="clock-face">
+                <span class="alarm-indicator" aria-hidden="true"></span>
+                <time class="digital-time" id="digital-time" datetime="00:00">00:00</time>
+                <span class="time-period" id="time-period">AM</span>
+                <div class="lcd-lines" aria-hidden="true"></div>
+              </div>
+
+              <button class="stop-button" id="stop-button" type="button">
+                <span id="stop-label">Stop</span>
+              </button>
+            </div>
+
+            <div class="clock-feet" aria-hidden="true"><i></i><i></i></div>
+
+            <div class="runner-legs" aria-hidden="true">
+              <span class="leg leg-left"><i></i></span>
+              <span class="leg leg-right"><i></i></span>
+            </div>
+
+            <div class="blanket" aria-hidden="true">
+              <div class="blanket-pattern">✦ &nbsp; z &nbsp; ✦</div>
+              <i></i><i></i><i></i>
+            </div>
+
+            <div class="sleep-bubble" aria-hidden="true">
+              <span>Z</span><span>Z</span><span>Z</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="desk" aria-hidden="true">
+          <div class="desk-edge"></div>
+          <div class="drawer drawer-left"><span></span></div>
+          <div class="drawer drawer-right"><span></span></div>
+          <div class="desk-leg desk-leg-left"></div>
+          <div class="desk-leg desk-leg-right"></div>
+        </div>
+
+        <div class="room-message" id="room-message" role="status" aria-live="polite">
+          <span class="message-kicker">Alarm status</span>
+          <strong id="status-message">It knows you're awake.</strong>
+        </div>
+
+        <div class="start-overlay" id="start-overlay">
+          <div class="start-card">
+            <span class="eyebrow">06:00-ish · Bedroom</span>
+            <h1>Your alarm has<br /><em>trust issues.</em></h1>
+            <p>Try to stop it eight times. It has other plans.</p>
+            <button class="start-button" id="start-button" type="button">
+              <span>Start the alarm</span>
+              <svg aria-hidden="true" viewBox="0 0 30 18"><path d="M1 9h25M19 2l7 7-7 7" /></svg>
+            </button>
+            <small>Sound starts after you press the button.</small>
+          </div>
+        </div>
+      </section>
+
+      <p class="instructions" id="instructions">
+        Press <kbd>Stop</kbd> if you can catch it. Keyboard and touch welcome.
+      </p>
+    </main>
+  </body>
+</html>

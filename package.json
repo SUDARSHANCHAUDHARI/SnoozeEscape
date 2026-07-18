@@ -1,0 +1,25 @@
+{
+  "name": "snooze-escape",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An interactive alarm clock that refuses to be stopped.",
+  "author": "Sudarshan Chaudhari",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SUDARSHANCHAUDHARI/SnoozeEscape.git"
+  },
+  "keywords": [
+    "alarm-clock",
+    "browser-game",
+    "github-pages",
+    "vanilla-javascript"
+  ],
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "check": "node --check script.js && node scripts/verify.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
