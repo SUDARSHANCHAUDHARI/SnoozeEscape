@@ -1,21 +1,26 @@
 :root {
-  --ink: #091328;
-  --midnight: #15234d;
-  --dawn: #314a79;
-  --sky: #617aa2;
-  --paper: #fff7df;
+  --ink: #15152a;
+  --paper: #fff5df;
+  --coral: #ff5d5d;
+  --blue: #4f7cff;
+  --butter: #ffd166;
+  --mint: #58d6a9;
+  --lilac: #b695ff;
+  --midnight: #24233f;
+  --dawn: var(--blue);
+  --sky: var(--lilac);
   --wood: #81483a;
   --wood-dark: #512b2a;
   --wood-light: #b86b4f;
-  --alarm: #ff594d;
+  --alarm: var(--coral);
   --alarm-dark: #ba2e35;
-  --amber: #ffc857;
-  --lcd: #b9ffc8;
+  --amber: var(--butter);
+  --lcd: var(--mint);
   --lcd-dark: #173d39;
-  --lavender: #b9a4e8;
+  --lavender: var(--lilac);
   --outline: 3px solid var(--ink);
-  --display: "Arial Narrow", "Avenir Next Condensed", "Trebuchet MS", sans-serif;
-  --body: "Trebuchet MS", "Avenir Next", Arial, sans-serif;
+  --display: Impact, Haettenschweiler, "Arial Narrow Bold", "Franklin Gothic Condensed", sans-serif;
+  --body: Inter, ui-rounded, "SF Pro Rounded", "Segoe UI", sans-serif;
   --mono: "Courier New", Courier, monospace;
 }
 
@@ -26,14 +31,15 @@
 }
 
 html {
-  min-width: 320px;
+  min-width: 0;
   background: var(--ink);
 }
 
 body {
-  min-width: 320px;
+  min-width: 0;
   min-height: 100vh;
   margin: 0;
+  overflow-x: clip;
   color: var(--paper);
   background: var(--midnight);
   font-family: var(--body);
@@ -52,7 +58,7 @@ button {
 button:focus-visible,
 input:focus-visible,
 a:focus-visible {
-  outline: 4px solid var(--amber);
+  outline: 4px solid var(--blue);
   outline-offset: 4px;
 }
 
@@ -1338,6 +1344,32 @@ a:focus-visible {
   text-align: center;
 }
 
+.collection-credit {
+  position: relative;
+  z-index: 60;
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.5rem;
+  padding: 0.55rem 1rem;
+  color: var(--ink);
+  background: var(--paper);
+  border-top: var(--outline);
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.collection-credit a {
+  color: inherit;
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-underline-offset: 3px;
+}
+
 kbd {
   margin: 0 0.25rem;
   padding: 0.14rem 0.34rem;
@@ -1612,6 +1644,10 @@ kbd {
 }
 
 @media (max-width: 420px) {
+  .collection-credit {
+    flex-wrap: wrap;
+  }
+
   .reset-button {
     max-width: 62px;
     line-height: 1.05;
